@@ -5,9 +5,14 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList, TabFiveParamList } from '../types';
+import HomeScreen from '../screens/HomeScreen';
+import { Image } from "react-native";
+import { useIsFocused } from '@react-navigation/native';
+import OrdersScreen from '../screens/OrdersScreen';
+import HelpScreen from '../screens/HelpScreen';
+import InboxScreen from '../screens/InboxScreen';
+import AccountScreen from '../screens/AccountScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,20 +21,41 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Home"
+      tabBarOptions={{ activeTintColor: Colors['light'].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Home"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <Image source={useIsFocused() ? require("./../assets/icon/home-active.png") : require("./../assets/icon/home.png")} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Orders"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <Image source={useIsFocused() ? require("./../assets/icon/order-active.png") : require("./../assets/icon/order.png")} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Help"
+        component={TabThreeNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Image source={useIsFocused() ? require("./../assets/icon/help-active.png") : require("./../assets/icon/help.png")} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Inbox"
+        component={TabFourNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Image source={useIsFocused() ? require("./../assets/icon/inbox-active.png") : require("./../assets/icon/inbox.png")} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Account"
+        component={TabFiveNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Image source={useIsFocused() ? require("./../assets/icon/account-active.png") : require("./../assets/icon/account.png")} />,
         }}
       />
     </BottomTab.Navigator>
@@ -51,8 +77,8 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        component={HomeScreen}
+        options={{ headerTitle: 'Gojek', headerShown: false }}
       />
     </TabOneStack.Navigator>
   );
@@ -65,9 +91,51 @@ function TabTwoNavigator() {
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        component={OrdersScreen}
+        options={{ headerTitle: 'Orders' }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+function TabThreeNavigator() {
+  return (
+    <TabThreeStack.Navigator>
+      <TabThreeStack.Screen
+        name="TabThreeScreen"
+        component={HelpScreen}
+        options={{ headerTitle: 'Chat' }}
+      />
+    </TabThreeStack.Navigator>
+  );
+}
+
+const TabFourStack = createStackNavigator<TabFourParamList>();
+
+function TabFourNavigator() {
+  return (
+    <TabFourStack.Navigator>
+      <TabFourStack.Screen
+        name="TabFourScreen"
+        component={InboxScreen}
+        options={{ headerTitle: 'Inbox' }}
+      />
+    </TabFourStack.Navigator>
+  );
+}
+
+const TabFiveStack = createStackNavigator<TabFiveParamList>();
+
+function TabFiveNavigator() {
+  return (
+    <TabFiveStack.Navigator>
+      <TabFiveStack.Screen
+        name="TabFiveScreen"
+        component={AccountScreen}
+        options={{ headerTitle: 'Account' }}
+      />
+    </TabFiveStack.Navigator>
   );
 }
